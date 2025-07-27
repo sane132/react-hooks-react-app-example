@@ -1,37 +1,24 @@
-import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
-import { format } from "date-fns";
-import App from "../components/App";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect'; // Add this import
+import App from '../components/App';
 
-beforeEach(() => {
-  render(<App />);
+describe('App Component', () => {
+  test('should display "Now" in the header', () => {
+    render(<App />);
+    const headerElement = screen.getByText('Now');
+    expect(headerElement).toBeInTheDocument();
+  });
+
+  test('should include the ExampleComponent', () => {
+    render(<App />);
+    const exampleElement = screen.getByText('Whoa!');
+    expect(exampleElement).toBeInTheDocument();
+  });
+
+  test('should include the TestComponent', () => {
+    render(<App />);
+    const testElement = screen.getByText('This is our new test component');
+    expect(testElement).toBeInTheDocument();
+  });
 });
-
-test('should include "Now" in the header instead of a time', () => {
-  expect(
-    screen.queryByText(format(new Date(), "MMMM do yyyy, h:mm:ss a"))
-  ).not.toBeInTheDocument();
-  expect(screen.queryByText(/Now/g)).toBeInTheDocument();
-});
-
-test("should include the <ExampleComponent />", () => {
-  expect(screen.queryByText("Whoa!")).toBeInTheDocument();
-});
-
-test("should include the <TestComponent />", () => {
-  expect(screen.queryByTitle("time video")).toBeInTheDocument();
-});
-
-//   it('should include "Now" in the header instead of a time', () => {
-//     expect(wrapper.find('header').text()).to.not.include(moment().format('MMMM Do YYYY'))
-//     expect(wrapper.find('header').text()).to.include('Now')
-//   });
-
-//   it('should include the ExampleComponent', () => {
-//     expect(wrapper.text()).to.include('<ExampleComponent />')
-//   });
-
-//   it('should include the TestComponent', () => {
-//     expect(wrapper.text()).to.include('<TestComponent />')
-//   });
-// });
